@@ -40,5 +40,17 @@ export class TasksService {
     status?: TaskStatus,
     page?: number,
     limit?: number,
-  ): Task[] {}
+  ): Task[] {
+    let filteredTasks: Task[] = [...this.tasks];
+
+    if (status) {
+      filteredTasks = filteredTasks.filter(task => task.status === status);
+    }
+
+    if (page && limit) {
+      filteredTasks = filteredTasks.splice((page - 1) * limit, limit);
+    }
+
+    return filteredTasks;
+  }
 }
